@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { PokemonCard } from "./components/PokemonCard";
-import axios from "axios";
 import "./App.css";
+import usePokemonList from "./hooks/usePokemonList";
 
 const IndexPage = () => {
-  const [pokemonList, setPokemonList] = useState([]);
-  const [createPokemon, setCreatePokemon] = useState(false);
-  const [updateList, setUpdateList] = useState(0);
-
-  useEffect(() => {
-    const request = async () => {
-      const { data } = await axios.get("http://localhost:4000/");
-      setPokemonList(data);
-    };
-    setTimeout(request, 1500);
-  }, [updateList]);
+  const {
+    pokemonList,
+    handleAddPokemon,
+    handleRemovePokemon,
+    createPokemon,
+    setCreatePokemon,
+    updateList,
+    setUpdateList,
+    errorMessage,
+    isFetchingPokemon,
+    handleUpdatePokemon,
+  } = usePokemonList();
 
   return (
     <main>
       <h1>Coleção pessoal de POKÉMONS</h1>
-      <button onClick={() => setCreatePokemon(true)}>
-        Adicionar Pokémon à sua coleção
-      </button>
+      <div className="add-pokemon">
+        <button onClick={() => setCreatePokemon(true)}>
+          Adicionar Pokémon à sua coleção
+        </button>
+        {isFetchingPokemon && <p>Analisando Pokedex...</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
       {createPokemon && (
         <div className="create-card">
           <PokemonCard
@@ -29,19 +34,24 @@ const IndexPage = () => {
             setCreatePokemon={setCreatePokemon}
             updateList={updateList}
             setUpdateList={setUpdateList}
+            handleAddPokemon={handleAddPokemon}
+            handleRemovePokemon={handleRemovePokemon}
           />
         </div>
       )}
       <div className="pokemon-container">
-        {pokemonList.map(({ _id, name, imageUrl, evolution }) => (
+        {pokemonList.map(({ id, name, imageUrl, evolution }) => (
           <PokemonCard
-            key={_id}
-            id={_id}
+            key={id}
+            id={id}
             name={name}
             image={imageUrl}
             evolution={evolution}
             updateList={updateList}
             setUpdateList={setUpdateList}
+            handleAddPokemon={handleAddPokemon}
+            handleRemovePokemon={handleRemovePokemon}
+            handleUpdatePokemon={handleUpdatePokemon}
           />
         ))}
       </div>
