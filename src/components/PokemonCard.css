@@ -1,0 +1,29 @@
+.pokemon-container, .create-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px; 
+  }
+
+.pokemon-card {
+    width: 250px;
+    min-height: 385px;
+    border-radius: 20px;
+    box-shadow: 4px 4px 12px #388659;
+    padding: 12px;
+  }
+  
+.pokemon-card img {
+    width: 100%;
+  }
+  
+.pokemon-card div label input {
+    display: block;
+  }
+  
+.pokemon-card-name { 
+    text-transform: capitalize;
+    text-align: center;
+  }
