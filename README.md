@@ -1,5 +1,8 @@
 # EBAC - React do zero ao pro: Módulo 14
  
+## Instalando as dependências 
+
+### `npm install` 
 
 ## Como rodar o projeto
 
